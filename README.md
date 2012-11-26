@@ -9,7 +9,7 @@ Image Placeholder
 3. That's it.
 
 ## Example
-Checkout these example.
+Checkout these examples.
 ```html
 <img placeholder="100x200">
 <img placeholder="200x200" src="">
