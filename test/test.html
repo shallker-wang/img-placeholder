@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test for img-placeholder</title>
+        <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="coffeescript.js"></script>
+    </head>
+    <body id="body">
+    <!-- 
+    <img placeholder="20x40" src="data:image/gif;base64,R0lGODdhZABkAOMAAMzMzJaWlrGxsaOjo8XFxb6+vre3t5ycnKqqqgAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAZABkAAAE/hDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru987//AoHBILBqPyKRyyWw6n9CodEqtWq/YrHbL7Xq/4LB4TC6bz+i0es1uu99wqyAwKRwOBIkd35nX73kAe4FGAwN0EgcCCAiJi40bhogAioyOlkcEBYgEAQQGBwCdn6ETAZ6nE5qcnqCiraVHm3p0s7aTogcDfHWIt4K1uEWzwMW/FAYBBhXEv8eyrJqho3YVCAGQvRLU057VSMmBlZDjFJ3hyJ6X5I9Jp76AevGmAwCHFO/yvINx/f7/AAMKHEiwoMGDCBMqXMiwocOHECNKnEixosWLGDNq3Mixo8ePBiBDirwQAQA7"> -->
+    <span>hello</span>
+    <!-- <canvas id="tutorial" width="150" height="150">inside</canvas> -->
+    <img placeholder="200x40" id="foo" style="border: 0px;">
+    <img placeholder="270x129" src="">
+    <img src="http://www.baidu.com/img/baidu_sylogo1.gif">
+    <div>world</div>
+    <script type="text/javascript">
+        // console.log
+    </script>
+    <script type="text/coffeescript">
+        $ ->
+            imgs = document.getElementsByTagName('img')
+            for img in imgs
+                continue if !img.attributes.placeholder
+                continue if img.src
+                placeholder = img.attributes.placeholder.value
+                size = placeholder.split('x')
+                img.width = size[0]
+                img.height = size[1]
+                img.alt = placeholder
+                img.style.backgroundColor = '#DDD'
+    </script>
+    </body>
+</html>
