@@ -4,6 +4,7 @@
         <title>Test for img-placeholder</title>
         <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
         <script type="text/javascript" src="coffeescript.js"></script>
+        <script type="text/javascript" src="../img-placeholder.class.js"></script>
     </head>
     <body id="body">
     <!-- 
@@ -11,24 +12,15 @@
     <span>hello</span>
     <!-- <canvas id="tutorial" width="150" height="150">inside</canvas> -->
     <img placeholder="200x40" id="foo" style="border: 0px;">
-    <img placeholder="270x129" src="">
-    <img src="http://www.baidu.com/img/baidu_sylogo1.gif">
+    <img placeholder="200x40" src="300x200">
+    <img placeholder="270x129" src="200x200#AAA#0000FF#custom text goes here">
+    <img src="">
     <div>world</div>
     <script type="text/javascript">
-        // console.log
+        // console.log('hello')
     </script>
     <script type="text/coffeescript">
-        $ ->
-            imgs = document.getElementsByTagName('img')
-            for img in imgs
-                continue if !img.attributes.placeholder
-                continue if img.src
-                placeholder = img.attributes.placeholder.value
-                size = placeholder.split('x')
-                img.width = size[0]
-                img.height = size[1]
-                img.alt = placeholder
-                img.style.backgroundColor = '#DDD'
+
     </script>
     </body>
 </html>
