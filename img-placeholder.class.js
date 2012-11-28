@@ -8,13 +8,17 @@
 
       imgPlaceholder.prototype.imgs = [];
 
+      imgPlaceholder.prototype.imgWidth = 0;
+
+      imgPlaceholder.prototype.imgHeight = 0;
+
       imgPlaceholder.prototype.imgColor = '#888';
 
       imgPlaceholder.prototype.imgBGColor = '#DDD';
 
       imgPlaceholder.prototype.imgAlt = '';
 
-      imgPlaceholder.prototype.imgFormat = ['jpg', 'jpeg', 'png', 'gif'];
+      imgPlaceholder.prototype.imgFormats = ['jpg', 'jpeg', 'png', 'gif'];
 
       function imgPlaceholder() {
         this.imgs = document.getElementsByTagName('img');
@@ -22,37 +26,30 @@
       }
 
       imgPlaceholder.prototype.placeholder = function(imgs) {
-        var canvas, img, result, _i, _len, _results;
+        var img, _i, _len, _results;
         _results = [];
         for (_i = 0, _len = imgs.length; _i < _len; _i++) {
           img = imgs[_i];
           if (!this.valide(img)) {
             continue;
           }
-          result = this.parse(img.attributes.placeholder.value);
-          canvas = this.createCanvas(result.width, result.height);
-          _results.push(img.src = canvas.toDataURL());
+          this.parse(img.attributes.placeholder.value);
+          _results.push(img.src = this.createCanvas().toDataURL());
         }
         return _results;
       };
 
-      imgPlaceholder.prototype.createCanvas = function(width, height) {
+      imgPlaceholder.prototype.createCanvas = function() {
         var canvas, canvasContext;
-        if (width == null) {
-          width = 300;
-        }
-        if (height == null) {
-          height = 150;
-        }
         canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
+        canvas.width = this.imgWidth;
+        canvas.height = this.imgHeight;
         canvasContext = canvas.getContext('2d');
         canvasContext.fillStyle = this.imgBGColor;
-        canvasContext.fillRect(0, 0, width, height);
+        canvasContext.fillRect(0, 0, this.imgWidth, this.imgHeight);
         canvasContext.fillStyle = this.imgColor;
-        canvasContext.font = "" + (width / 10) + "px Arial";
-        canvasContext.fillText(this.imgAlt, width / 3.3, height / 2);
+        canvasContext.font = "" + (this.imgWidth / 10) + "px Arial";
+        canvasContext.fillText(this.imgAlt, this.imgWidth / 3.3, this.imgHeight / 2);
         return canvas;
       };
 
@@ -70,10 +67,8 @@
         var size;
         this.imgAlt = placeholder;
         size = placeholder.split('x');
-        return {
-          width: size[0],
-          height: size[1]
-        };
+        this.imgWidth = size[0];
+        return this.imgHeight = size[1];
       };
 
       return imgPlaceholder;

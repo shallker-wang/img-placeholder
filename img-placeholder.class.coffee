@@ -1,10 +1,12 @@
 (->
     class imgPlaceholder
         imgs: []
+        imgWidth: 0
+        imgHeight: 0
         imgColor: '#888'
         imgBGColor: '#DDD'
         imgAlt: ''
-        imgFormat: ['jpg', 'jpeg', 'png', 'gif']
+        imgFormats: ['jpg', 'jpeg', 'png', 'gif']
 
         constructor: ->
             @imgs = document.getElementsByTagName('img')
@@ -13,20 +15,19 @@
         placeholder: (imgs)->
             for img in imgs
                 continue if !@valide(img)
-                result = @parse(img.attributes.placeholder.value)
-                canvas = @createCanvas(result.width, result.height)
-                img.src = canvas.toDataURL()
+                @parse(img.attributes.placeholder.value)
+                img.src = @createCanvas().toDataURL()
 
-        createCanvas: (width = 300, height = 150)->
+        createCanvas: ->
             canvas = document.createElement('canvas')
-            canvas.width = width
-            canvas.height = height
+            canvas.width = @imgWidth
+            canvas.height = @imgHeight
             canvasContext = canvas.getContext('2d');
             canvasContext.fillStyle = @imgBGColor;
-            canvasContext.fillRect(0, 0, width, height);
+            canvasContext.fillRect(0, 0, @imgWidth, @imgHeight);
             canvasContext.fillStyle = @imgColor;
-            canvasContext.font = "#{width/10}px Arial";
-            canvasContext.fillText(@imgAlt, width/3.3, height/2);
+            canvasContext.font = "#{@imgWidth/10}px Arial";
+            canvasContext.fillText(@imgAlt, @imgWidth/3.3, @imgHeight/2);
             canvas
 
         valide: (img)->
@@ -37,10 +38,8 @@
         parse: (placeholder)->
             @imgAlt = placeholder
             size = placeholder.split('x')
-            {
-                width: size[0]
-                height: size[1]
-            }
+            @imgWidth = size[0]
+            @imgHeight = size[1]
 
     document.addEventListener('DOMContentLoaded', => new imgPlaceholder())
 )()
