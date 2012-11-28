@@ -8,13 +8,17 @@
 
       imgPlaceholder.prototype.imgs = [];
 
-      imgPlaceholder.prototype.imgColor = '000';
+      imgPlaceholder.prototype.imgWidth = 0;
+
+      imgPlaceholder.prototype.imgHeight = 0;
+
+      imgPlaceholder.prototype.imgColor = '888';
 
       imgPlaceholder.prototype.imgBGColor = 'DDD';
 
       imgPlaceholder.prototype.imgAlt = '';
 
-      imgPlaceholder.prototype.imgFormat = ['jpg', 'jpeg', 'png', 'gif'];
+      imgPlaceholder.prototype.imgFormats = ['jpg', 'jpeg', 'png', 'gif'];
 
       function imgPlaceholder() {
         this.imgs = document.getElementsByTagName('img');
@@ -22,21 +26,39 @@
       }
 
       imgPlaceholder.prototype.placeholder = function(imgs) {
-        var img, result, _i, _len, _results;
+        var canvas, img, _i, _len, _results;
         _results = [];
         for (_i = 0, _len = imgs.length; _i < _len; _i++) {
           img = imgs[_i];
           if (!this.valide(img)) {
             continue;
           }
-          result = this.parse(img);
-          img.width = result.width;
-          img.height = result.height;
-          img.alt = result.alt;
-          img.style.color = "#" + result.color;
-          _results.push(img.style.backgroundColor = "#" + result.bgcolor);
+          this.parse(img.src);
+          console.log(this.imgWidth, this.imgHeight, this.imgBGColor, this.imgColor, this.imgAlt);
+          canvas = this.createCanvas(this.imgWidth, this.imgHeight);
+          _results.push(img.src = canvas.toDataURL());
         }
         return _results;
+      };
+
+      imgPlaceholder.prototype.createCanvas = function(width, height) {
+        var canvas, canvasContext;
+        if (width == null) {
+          width = 300;
+        }
+        if (height == null) {
+          height = 150;
+        }
+        canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        canvasContext = canvas.getContext('2d');
+        canvasContext.fillStyle = this.imgBGColor;
+        canvasContext.fillRect(0, 0, width, height);
+        canvasContext.fillStyle = this.imgColor;
+        canvasContext.font = "" + (width / 10) + "px Arial";
+        canvasContext.fillText(this.imgAlt, width / 3.3, height / 2);
+        return canvas;
       };
 
       imgPlaceholder.prototype.valide = function(img) {
@@ -50,7 +72,7 @@
         strEndsWith = function(str, end) {
           return str.indexOf(end, str.length - end.length) !== -1;
         };
-        _ref = this.imgFormat;
+        _ref = this.imgFormats;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           format = _ref[_i];
           if (strEndsWith(img.src, format)) {
@@ -60,19 +82,24 @@
         return true;
       };
 
-      imgPlaceholder.prototype.parse = function(img) {
-        var result, sets, size, sizeStr, _ref, _ref1, _ref2, _ref3, _ref4;
-        sets = img.src.split('#');
+      imgPlaceholder.prototype.parse = function(str) {
+        var sets, size, sizeStr, _ref;
+        sets = str.split('#');
         sizeStr = sets[0].split('/').pop();
         size = sizeStr.split('x');
-        result = {
-          width: (_ref = size[0]) != null ? _ref : 0,
-          height: (_ref1 = size[1]) != null ? _ref1 : 0,
-          bgcolor: (_ref2 = sets[1]) != null ? _ref2 : this.imgBGColor,
-          color: (_ref3 = sets[2]) != null ? _ref3 : this.imgColor,
-          alt: (_ref4 = sets[3]) != null ? _ref4 : sizeStr
-        };
-        return result;
+        if (size[0]) {
+          this.imgWidth = size[0];
+        }
+        if (size[1]) {
+          this.imgHeight = size[1];
+        }
+        if (sets[1]) {
+          this.imgBGColor = sets[1];
+        }
+        if (sets[2]) {
+          this.imgColor = sets[2];
+        }
+        return this.imgAlt = (_ref = sets[3]) != null ? _ref : sizeStr;
       };
 
       return imgPlaceholder;
