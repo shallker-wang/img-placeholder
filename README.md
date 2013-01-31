@@ -19,3 +19,6 @@ Checkout these examples.
 ## Fallback
 When an `img` tag has a `src` attribute and it's not empty, it will be ignored by img-placeholder and displayed as a normal image.  
 Try `<img placeholder="270x129" src="http://www.baidu.com/img/baidu_sylogo1.gif">`.  
+
+## License
+[Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0)
