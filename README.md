@@ -20,4 +20,4 @@ When an `img` tag has a `src` attribute and it's not empty, it will be ignored b
 Try `<img placeholder="270x129" src="http://www.baidu.com/img/baidu_sylogo1.gif">`.  
 
 ## License
-Img Placeholder is under license [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+Img Placeholder is under license [MIT](http://opensource.org/licenses/MIT).
