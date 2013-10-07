@@ -1,0 +1,15 @@
+{
+  "name": "img-placeholder",
+  "repo": "shallker-wang/img-placeholder",
+  "description": "Img placeholder",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "main": "component.js",
+  "scripts": [
+    "component.js",
+    "img-placeholder.js"
+  ]
+}
